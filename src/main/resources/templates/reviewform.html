@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head> 
+    <title>Create a Review</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="../static/style/style.css" th:href="@{/style/style.css}" rel="stylesheet"/>
+</head>
+<body>
+    <div id="container">
+
+        <nav>
+            <div class="navbar">
+                <img id="logo" src="../static/images/logo.png" th:src="@{/images/logo.png}">
+                <div id="links">
+                    <a href="">Log Out</a>
+                    <a href="" th:text="${user.name}">[Username]</a>
+                </div>
+            </div>
+        </nav>
+
+
+        <p><a th:href="/reviews/{uid}(uid=${user.userID})">Reviews</a> / Review Form</p>
+        <h1>Create/Edit Review</h1>
+        <form action="#" th:action="@{/reviewform}" th:object="${review}" method="post">
+            <p>
+                Rating: <br>
+                <input type="radio" th:field="*{rating}" id="1-star" name="rating" value="1"/>
+                <label for="1-star">★</label><br>
+
+                <input type="radio" th:field="*{rating}" id="2-star" name="rating" value="2"/>
+                <label for="2-star">★★</label><br>
+
+                <input type="radio" th:field="*{rating}" id="3-star" name="rating" value="3"/>
+                <label for="3-star">★★★</label><br>
+
+                <input type="radio" th:field="*{rating}" id="4-star" name="rating" value="4"/>
+                <label for="4-star">★★★★</label><br>
+
+                <input type="radio" th:field="*{rating}" id="5-star" name="rating" value="5"/>
+                <label for="5-star">★★★★★</label><br>
+            </p>
+            <p> 
+                Comment:<br>
+                <textarea id="comment" th:field="*{comment}" rows="4" cols="50">Comment goes here...</textarea>
+            </p>
+            <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+        </form>
+    </div>
+</body>
+</html>

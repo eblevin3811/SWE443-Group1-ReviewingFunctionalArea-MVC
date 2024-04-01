@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head> 
+    <title>Your Reviews</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="../static/style/style.css" th:href="@{/style/style.css}" rel="stylesheet"/>
+</head>
+
+<body>
+    <div id="container">
+        <nav>
+            <div class="navbar">
+                <img id="logo" src="../static/images/logo.png" th:src="@{/images/logo.png}">
+                <div id="links">
+                    <a href="">Log Out</a>
+                    <a href="" th:text="${username}">[Username]</a>
+                </div>
+            </div>
+        </nav>
+
+        <main>
+            <h1>Reviews</h1>
+
+            <!-- EACH PROPERTY ASSOCIATED WITH USER: -->
+            <div id="property" th:each="property: ${properties}">
+                <div id="reviewinfo">
+                    <h3 th:text="${property.propertyName + ' (' + #dates.format(property.startDate, 'MMM dd, yyyy') + ' - ' + #dates.format(property.endDate, 'MMM dd, yyyy') + ')' }">Property title (Start date - End date)</h3>
+                    <p th:text="${'Location: ' + property.propertyLocation}">Description ...</p>
+                </div>
+
+                <div id="propertyreviews">
+                    <div class="commentborder" th:each="review: ${reviews}">
+
+                        <!-- PROPERTY HAS REVIEW -->
+                        <span th:if="${review.scheduledProperty.propertyID == property.propertyID}">
+                            <div>
+                                <p th:text="${'DATE: ' + #dates.format(review.lastEdit, 'MMM dd, yyyy')}">DATE: [date of most recent edit here]</p>
+                                <p th:text="${'RATING: ' + review.rating}">RATING: [rating of review here]</p>
+                                <p th:text="${'COMMENT: ' + review.comments[0].content}">COMMENT: [most recent comment]</p>
+
+                                <a th:href="@{/editreview/{reviewId}(reviewId=${review.reviewId})}">
+                                    <button>Edit review</button>
+                                </a>
+                            </div>
+                        </span>
+
+
+                        <!-- PROPERTY HAS NO REVEIW -->
+                        <span th:unless="${review.scheduledProperty.propertyID == property.propertyID}">
+                            <div>
+                                <p>No reviews yet.</p>
+
+                                <a th:href="@{/leavereview/{propertyID}(propertyID=${property.propertyID})}">
+                                    <button>Leave review</button>
+                                </a>
+                            </div>
+                        </span>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </main>
+
+    </div>
+</body>
