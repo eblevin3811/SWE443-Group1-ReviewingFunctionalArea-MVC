@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.handlingformsubmission;
+package com.example.reviewfunctionalarea;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -28,9 +28,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.example.reviewfunctionalarea.ReviewController;
+
 @WebMvcTest(ReviewController.class)
 @TestPropertySource(properties = "logging.level.org.springframework.web=DEBUG")
-public class HandlingFormSubmissionApplicationTest {
+public class ReviewFunctionalAreaApplicationTest {
 
 	@Autowired
 	private MockMvc mockMvc;

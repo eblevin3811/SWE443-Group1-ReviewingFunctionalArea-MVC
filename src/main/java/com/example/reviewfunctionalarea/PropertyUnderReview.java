@@ -1,4 +1,4 @@
-package com.example.handlingformsubmission;
+package com.example.reviewfunctionalarea;
 
 import java.io.Serializable;
 import java.util.Date;
