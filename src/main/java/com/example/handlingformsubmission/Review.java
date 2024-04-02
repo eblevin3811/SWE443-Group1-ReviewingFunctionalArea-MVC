@@ -1,8 +1,10 @@
 package com.example.handlingformsubmission;
 
 import java.util.Date;
+import java.util.List;
 import java.util.ArrayList;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,21 +21,20 @@ public class Review{
 
     private Long reviewId;
 
-    @ManyToOne
-    private PropertyUnderReview scheduledProperty;
+    private Long scheduledProperty;
 
 	private long userID;
     private Date lastEdit;
-
-    @OneToMany(mappedBy="reviewId")
-    private ArrayList<ReviewComment> comments;
+    private String comment;
     private int rating;
 
-	public Review(PropertyUnderReview property, long userID, Date lastEdit, ArrayList<ReviewComment> comments, int rating, long reviewId) {
+    public Review(){}
+
+	public Review(Long property, long userID, Date lastEdit, String comment, int rating, long reviewId) {
 	    this.scheduledProperty = property;
         this.userID = userID;
         this.lastEdit = lastEdit;
-        this.comments = comments;
+        this.comment = comment;
         this.rating = rating;
         this.reviewId = reviewId;
 	}
@@ -50,11 +51,11 @@ public class Review{
         this.reviewId = reviewId;
     }
 
-    public void setScheduledProperty(PropertyUnderReview scheduledProperty){
+    public void setScheduledProperty(Long scheduledProperty){
         this.scheduledProperty = scheduledProperty;
     }
 
-    public PropertyUnderReview getScheduledProperty(){
+    public Long getScheduledProperty(){
         return this.scheduledProperty;
     }
 
@@ -74,12 +75,12 @@ public class Review{
         return this.rating;
     }
 
-    public void setComments(ArrayList<ReviewComment> comments){
-        this.comments = comments;
+    public void setComment(String comment){
+        this.comment = comment;
     }
 
-    public ArrayList<ReviewComment> getComments(){
-        return this.comments;
+    public String getComment(){
+        return this.comment;
     }
 
     public Date getLastEdit(){
@@ -89,11 +90,4 @@ public class Review{
     public void setLastEdit(Date lastEdit){
         this.lastEdit = lastEdit;
     }
-
-    public void editReview(ReviewComment comment, int rating){
-        this.comments.add(0, comment);
-        this.rating = rating;
-        this.lastEdit = comment.getDate();
-    }
-
 }

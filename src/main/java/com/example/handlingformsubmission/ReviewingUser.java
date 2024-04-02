@@ -1,8 +1,10 @@
 package com.example.handlingformsubmission;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Iterator;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,13 +22,15 @@ public class ReviewingUser{
 	private String name;
     private Long userID;
 
-    @OneToMany(mappedBy="userID")
-    private ArrayList<Review> reviewList;
+    @OneToMany(mappedBy="userID", cascade = CascadeType.ALL)
+    private List<Review> reviewList;
 
-    @ManyToMany
-    private ArrayList<PropertyUnderReview> propertyList;
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<PropertyUnderReview> propertyList;
 
-	public ReviewingUser(String name, ArrayList<Review> reviewList, ArrayList<PropertyUnderReview> propertyList, long userID) {
+    public ReviewingUser(){}
+
+	public ReviewingUser(String name, ArrayList<Review> reviewList, List<PropertyUnderReview> propertyList, long userID) {
 	    this.name = name;
         this.reviewList = reviewList;
         this.propertyList = propertyList;
@@ -53,11 +57,11 @@ public class ReviewingUser{
         this.name = name;
     }
 	  
-	public ArrayList<Review> getReviewList(){
+	public List<Review> getReviewList(){
         return reviewList;
     }
 
-    public void setReviewList(ArrayList<Review> reviewList){
+    public void setReviewList(List<Review> reviewList){
         this.reviewList = reviewList; 
     }
 
@@ -65,11 +69,11 @@ public class ReviewingUser{
         this.propertyList = propertyList;
     }
 
-    public ArrayList<PropertyUnderReview> getPropertyList(){
+    public List<PropertyUnderReview> getPropertyList(){
         return this.propertyList;
     }
 
-	public Review findReviewByID(int rID){
+	public Review findReviewByID(long rID){
         Iterator<Review> itr = reviewList.iterator();
 
         while (itr.hasNext()){

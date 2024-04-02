@@ -21,6 +21,8 @@ public class PropertyUnderReview{
     private Date startDate;
     private Date endDate;
 
+    public PropertyUnderReview(){}
+
 	public PropertyUnderReview (long propertyID, String propertyName, String propertyLocation, Date startDate, Date endDate) {
 	    this.propertyID = propertyID;
         this.propertyLocation = propertyLocation;

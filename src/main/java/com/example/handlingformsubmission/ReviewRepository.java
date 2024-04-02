@@ -9,5 +9,7 @@ public interface ReviewRepository extends
 
 			List<Review> findByReviewId(Long reviewId);
 
+			List<Review>findByUserID(Long userID);
+
 			Optional<Review> findById(Long id);
 		}

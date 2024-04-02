@@ -56,3 +56,35 @@ main {
     padding: 10px;
     margin-bottom: 10px;
 }
+
+.link-button {
+    color: white;
+    background-color: black;
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+    border-radius: 6px;
+}
+
+.link-button a {
+    text-decoration: none;
+    color:white;
+}
+
+#submit-btn {
+    color: white;
+    background-color: black;
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+    border-radius: 6px;
+}
+
+#reset-btn {
+    color: white;
+    background-color: black;
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+    border-radius: 6px;
+}
