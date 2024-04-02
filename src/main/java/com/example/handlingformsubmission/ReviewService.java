@@ -42,7 +42,13 @@ public class ReviewService {
     }
 
     public Review findReview(long rid){
-        return reviewRepository.findByReviewId(rid).get(0);
+        List<Review> list = reviewRepository.findByReviewId(rid);
+
+        if (list.size() > 0){
+            return list.get(0);
+        }
+
+        return null;
     }
 
     public List<PropertyUnderReview> getPropertiesForUser(List<Review> reviews){

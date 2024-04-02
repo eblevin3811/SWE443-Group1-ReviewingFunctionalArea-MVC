@@ -41,6 +41,7 @@ public class ReviewController {
 			calendar.set(Calendar.DAY_OF_MONTH, 7);
 			Date end = calendar.getTime();
 			PropertyUnderReview demoProp = new PropertyUnderReview(123, "Demo property", "Demoland", start, end);
+			PropertyUnderReview demoProp2 = new PropertyUnderReview(456, "Demo property 2", "Somewhere else", start, end);
 			
 			Review demoReview = new Review(demoProp.getPropertyID(), demoUser.getUserID(), new Date(), "It was pretty good.", 4, 123);
 
@@ -48,6 +49,7 @@ public class ReviewController {
 			ArrayList<PropertyUnderReview> demoPropList = new ArrayList<>();
 			demoReviewList.add(0, demoReview);
 			demoPropList.add(0, demoProp);
+			demoPropList.add(demoProp2);
 
 			demoUser.setReviewList(demoReviewList);
 			demoUser.setPropertyList(demoPropList);
@@ -56,7 +58,7 @@ public class ReviewController {
 			service.saveReviewingUser(demoUser);
 			service.saveReview(demoReview);
 
-			model.addAttribute("username", demoUser.getName());
+			model.addAttribute("user", demoUser);
 			model.addAttribute("properties", demoUser.getPropertyList());
 			model.addAttribute("reviews", demoUser.getReviewList());
 
@@ -65,9 +67,9 @@ public class ReviewController {
 		else {
 			ReviewingUser user = service.findUser(userid);
 			List<Review> reviews = service.prepareReviewList(userid);
-			List<PropertyUnderReview> properties = service.getPropertiesForUser(reviews);
+			List<PropertyUnderReview> properties = user.getPropertyList();
 
-			model.addAttribute("username", user.getName());
+			model.addAttribute("user", user);
 			model.addAttribute("properties", properties);
 			model.addAttribute("reviews", reviews);
 		}
@@ -102,16 +104,71 @@ public class ReviewController {
 		Review oldReview = service.findReview(reviewid);
 
 		oldReview.setComment(review.getComment());
-		oldReview.setRating(review.getRating());
+		if (review.getRating() != 0){
+			oldReview.setRating(review.getRating());
+		}
 		oldReview.setLastEdit(new Date());
 		service.saveReview(oldReview);
 
 		List<Review> reviews = service.prepareReviewList(uid);
 		
-		List<PropertyUnderReview> properties = service.getPropertiesForUser(reviews);
+		List<PropertyUnderReview> properties = user.getPropertyList();
+
+		model.addAttribute("user", user);
+		model.addAttribute("reviews", reviews);
+		model.addAttribute("properties", properties);
+
+		return "reviews";
+	}
+
+	@GetMapping("/leavereview/{uid}/{propertyId}")
+	public String leaveReviewForm(@PathVariable("uid") long uid, @PathVariable("propertyId") long propertyId, Model model){
+		
+		//Get user first
+		ReviewingUser user = service.findUser(uid);
+
+		//New review
+		Review review = new Review();
+
+		//Populate model
+		model.addAttribute("propertyId", propertyId);
+		model.addAttribute("title", "Leave a Review");
+		model.addAttribute("user", user);
+		model.addAttribute("review", review);
 
 
-		model.addAttribute("username", user.getName());
+		return "reviewform";
+	}
+
+	@PostMapping("/submitnewreview/{uid}/{propertyId}")
+	public String submitNewReview(@ModelAttribute("review") Review review, @PathVariable("uid") long uid, @PathVariable("propertyId") long propertyId, Model model) {
+
+		ReviewingUser user = service.findUser(uid);
+
+		//Generate appropriate review ID
+		long rID = (long)Math.random();
+		while (service.findReview(rID) != null){
+			rID += 1;
+		}
+		Review newReview = new Review();
+		newReview.setComment(review.getComment());
+		newReview.setLastEdit(new Date());
+		newReview.setRating(review.getRating());
+		newReview.setReviewId(rID);
+		newReview.setScheduledProperty(propertyId);
+		newReview.setUserID(uid);
+		service.saveReview(newReview);
+
+		//Add review to list
+		List<Review> userReviewsList = user.getReviewList();
+		userReviewsList.add(newReview);
+		user.setReviewList(userReviewsList);
+		service.saveReviewingUser(user);
+
+		List<Review> reviews = service.prepareReviewList(uid);
+		List<PropertyUnderReview> properties = user.getPropertyList();
+
+		model.addAttribute("user", user);
 		model.addAttribute("reviews", reviews);
 		model.addAttribute("properties", properties);
 
