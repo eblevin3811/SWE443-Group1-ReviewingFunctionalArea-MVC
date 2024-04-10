@@ -39,8 +39,8 @@ public class ReviewFunctionalAreaApplicationTest {
 
 	@Test
 	public void rendersForm() throws Exception {
-		mockMvc.perform(get("/reviews"))
-				.andExpect(content().string(containsString("Review")));
+		mockMvc.perform(get("/reviews/123"))
+				.andExpect(content().string(containsString("Reviews")));
 	}
 	/* 
 	@Test
