@@ -1,4 +1,4 @@
-package com.example.reviewfunctionalarea;
+package com.vacationorg.reviewfunctionalarea;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

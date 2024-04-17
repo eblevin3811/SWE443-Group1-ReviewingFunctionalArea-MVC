@@ -1,4 +1,4 @@
-package com.example.reviewfunctionalarea;
+package com.vacationorg.reviewfunctionalarea;
 
 import java.util.ArrayList;
 import java.util.List;

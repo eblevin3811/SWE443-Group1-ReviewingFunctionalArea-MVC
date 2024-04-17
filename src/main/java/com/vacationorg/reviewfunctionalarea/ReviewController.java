@@ -1,4 +1,4 @@
-package com.example.reviewfunctionalarea;
+package com.vacationorg.reviewfunctionalarea;
 
 import java.util.Date;
 import java.util.List;
