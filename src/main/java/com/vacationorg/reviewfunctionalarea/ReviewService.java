@@ -50,17 +50,4 @@ public class ReviewService {
 
         return null;
     }
-
-    public List<PropertyUnderReview> getPropertiesForUser(List<Review> reviews){
-        ArrayList<PropertyUnderReview> properties = new ArrayList<PropertyUnderReview>();
-        Iterator<Review> itr = reviews.iterator();
-
-        while (itr.hasNext()){
-            Review r = itr.next();
-            properties.addAll(propertyUnderReviewRepository.findByPropertyID(r.getScheduledProperty()));
-        }
-
-        return properties;
-    }
-
 }

@@ -72,25 +72,4 @@ public class ReviewingUser{
     public List<PropertyUnderReview> getPropertyList(){
         return this.propertyList;
     }
-
-	public Review findReviewByID(long rID){
-        Iterator<Review> itr = reviewList.iterator();
-
-        while (itr.hasNext()){
-            Review review = itr.next();
-            if (review.getId() == rID){
-                return review;
-            }
-        }
-        return null;
-    }
-
-    public void addReview(Review review){
-        reviewList.add(review);
-    }
-
-    private void updateReviews(){
-        //TODO: implement once database added
-    }
-
 }
