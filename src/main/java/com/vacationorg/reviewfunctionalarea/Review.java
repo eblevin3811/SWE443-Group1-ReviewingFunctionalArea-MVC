@@ -21,7 +21,7 @@ public class Review{
 
     private Long reviewId;
 
-    private Long scheduledProperty;
+    private long scheduledProperty;
 
 	private long userID;
     private Date lastEdit;
@@ -30,7 +30,7 @@ public class Review{
 
     public Review(){}
 
-	public Review(Long property, long userID, Date lastEdit, String comment, int rating, long reviewId) {
+	public Review(long property, long userID, Date lastEdit, String comment, int rating, long reviewId) {
 	    this.scheduledProperty = property;
         this.userID = userID;
         this.lastEdit = lastEdit;
@@ -51,11 +51,11 @@ public class Review{
         this.reviewId = reviewId;
     }
 
-    public void setScheduledProperty(Long scheduledProperty){
+    public void setScheduledProperty(long scheduledProperty){
         this.scheduledProperty = scheduledProperty;
     }
 
-    public Long getScheduledProperty(){
+    public long getScheduledProperty(){
         return this.scheduledProperty;
     }
 

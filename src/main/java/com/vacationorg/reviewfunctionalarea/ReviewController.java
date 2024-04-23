@@ -171,6 +171,12 @@ public class ReviewController {
 		//Send change back to microservice
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		String stringDate = df.format(oldReview.getLastEdit());
+
+		System.out.println(reviewid);
+		System.out.println(user.getUserID());
+		System.out.println(review.getScheduledProperty());
+
+
 		try{
 			IOUtils.toString(new URL("http://localhost:8092/updateReview/" + reviewid + "/" + user.getName() + "/" + user.getUserID() + "/" + review.getComment().replaceAll(" ", "_") + "/" + Integer.toString(review.getRating()) + "/" + review.getScheduledProperty() + "/" + stringDate), Charset.forName("UTF-8"));
 		} catch (Exception e){};
